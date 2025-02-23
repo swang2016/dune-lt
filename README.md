@@ -18,7 +18,7 @@ The heavy lifting is done by `dlt` and [`spice`](https://github.com/paradigmxyz/
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/yourusername/dune-lt.git
+git clone https://github.com/swang2016/dune-lt.git
 cd dune-lt
 ```
 
