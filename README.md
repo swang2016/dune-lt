@@ -10,7 +10,7 @@ This source allows you to:
 - Accepts query parameters if the Dune query is [parameterized](https://docs.dune.com/web-app/query-editor/parameters)
 - Extract and load data incrementally using replication keys
 
-The heavy lifting is done by `dlt` and [`spice`](https://github.com/paradigmxyz/spice), a Python package released by the Paradigm team to interact with the Dune REST API. Spice handles execution of the queries and fetching the results as well as pagination.I merely wrapped it in a `dlt` source, so all credit goes to the `dlt` and `spice` teams!
+The heavy lifting is done by `dlt` and [`spice`](https://github.com/paradigmxyz/spice), a Python package released by the Paradigm team to interact with the Dune REST API. Spice handles execution of the queries and fetching the results as well as pagination. I merely wrapped calls with the spice API in a `dlt` source, so all credit goes to the `dlt` and `spice` teams!
 
 ## Installation
 
@@ -130,8 +130,7 @@ dlt pipeline dune_source show
 api_key = "your-dune-api-key"
 ```
 2. Set your Snowflake credentials as a secret in DLT:
- * In the `.dlt/` directory, create a file called `secrets.toml`
- * Add the following to the file:
+ * In the `secrets.toml` file, add the following:
 ```toml
 [destination.snowflake.credentials]
 database = "<your-database>"
