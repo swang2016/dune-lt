@@ -8,9 +8,9 @@ This source allows you to:
 - dlt resources are created automatically based on the queries defined in the config file
 - Accepts Dune query IDs, query URLs, or SQL as input for the queries
 - Accepts query parameters if the Dune query is [parameterized](https://docs.dune.com/web-app/query-editor/parameters)
-- Extract data incrementally using replication keys
+- Extract and load data incrementally using replication keys
 
-The heavy lifting is done by `dlt` and [`spice`](https://github.com/paradigmxyz/spice), a Python package released by the Paradigm team to interact with the Dune REST API. I merely wrapped it in a `dlt` source, so all credit goes to the `dlt` and `spice` teams!
+The heavy lifting is done by `dlt` and [`spice`](https://github.com/paradigmxyz/spice), a Python package released by the Paradigm team to interact with the Dune REST API. Spice handles execution of the queries and fetching the results as well as pagination.I merely wrapped it in a `dlt` source, so all credit goes to the `dlt` and `spice` teams!
 
 ## Installation
 
