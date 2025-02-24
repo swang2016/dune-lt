@@ -7,12 +7,12 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.14"
-dlt = "^1.6.1"
 notebook = "^7.3.2"
 duckdb = "^1.2.0"
 dune-spice = "^0.2.6"
 pandas = "^2.2.3"
 streamlit = "^1.42.2"
+dlt = {version = "^1.7.0", extras = ["snowflake"]}
 
 
 [build-system]
