@@ -1,3 +1,4 @@
+########## Dune Queries ##########
 [dune_queries.dex_volume]
 query = "https://dune.com/queries/4388"
 primary_key = ["project", "_col1"]
@@ -35,3 +36,9 @@ order by timestamp
 primary_key = "timestamp"
 replication_key = "timestamp"
 write_disposition = "merge"
+
+
+
+########## Snowflake Destination ##########
+[destination.snowflake]
+keep_staged_files = false # defaults to true otherwise (https://dlthub.com/docs/dlt-ecosystem/destinations/snowflake#data-loading)

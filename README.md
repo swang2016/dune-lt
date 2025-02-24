@@ -1,16 +1,16 @@
 # dune-lt
 
-A dlt source that uses [DLT (Data Load Tool)](https://dlthub.com/docs/intro) to extract data from [Dune Analytics](https://dune.com/) queries and load into your destination of [choice](https://dlthub.com/docs/dlt-ecosystem/destinations/). In the examples shown in this repo, we use DuckDB as the destination.
+A dlt source that uses [DLT (Data Load Tool)](https://dlthub.com/docs/intro) to extract data from [Dune Analytics](https://dune.com/) queries and load into your destination of [choice](https://dlthub.com/docs/dlt-ecosystem/destinations/). In the examples shown in this repo, we use DuckDB and Snowflake as the destination. Jump to the [Example Usage: DuckDB](#example-usage-duckdb) and [Example Usage: Snowflake](#example-usage-snowflake) sections to see how to use the source.
 
 This source allows you to:
 
 - Configure multiple Dune queries in a single config file (`.dlt/config.toml`)
 - dlt resources are created automatically based on the queries defined in the config file
-- Extract data incrementally using replication keys
 - Accepts Dune query IDs, query URLs, or SQL as input for the queries
 - Accepts query parameters if the Dune query is [parameterized](https://docs.dune.com/web-app/query-editor/parameters)
+- Extract and load data incrementally using replication keys
 
-The heavy lifting is done by `dlt` and [`spice`](https://github.com/paradigmxyz/spice), a Python package released by the Paradigm team to interact with the Dune REST API. I merely wrapped it in a `dlt` source, so all credit goes to the `dlt` and `spice` teams!
+The heavy lifting is done by `dlt` and [`spice`](https://github.com/paradigmxyz/spice), a Python package released by the Paradigm team to interact with the Dune REST API. Spice handles execution of the queries and fetching the results as well as pagination. I merely wrapped calls with the spice API in a `dlt` source, so all credit goes to the `dlt` and `spice` teams!
 
 ## Installation
 
@@ -80,7 +80,7 @@ query = 4749625 # https://dune.com/queries/4749625
 query_params = '{"symbol": "Y2K"}'
 ```
 
-## Usage
+## Example Usage: DuckDB
 
 1. Set your Dune API as a secret in DLT:
  * In the `.dlt/` directory, create a file called `secrets.toml`
@@ -92,7 +92,7 @@ api_key = "your-dune-api-key"
 
 2. Run the pipeline:
 ```bash
-python __init__.py
+python duckdb_pipeline.py
 ```
 
 This will:
@@ -100,7 +100,7 @@ This will:
 2. Extract data from Dune Analytics via Dune's REST API
 3. Load the data into a DuckDB database named `dune_source.duckdb`
 
-## Examining the Data
+### Examining the Data in DuckDB
 
 You can examine the extracted data using the provided Jupyter notebook `examine_tables.ipynb`. The notebook shows how to:
 
@@ -119,6 +119,32 @@ dlt also supports a built-in streamlit app for exploring the data in the DuckDB 
 ```bash
 dlt pipeline dune_source show
 ```
+
+## Example Usage: Snowflake
+
+1. Set your Dune API as a secret in DLT:
+ * In the `.dlt/` directory, create a file called `secrets.toml`
+ * Add the following to the file:
+```toml
+[dune_source]
+api_key = "your-dune-api-key"
+```
+2. Set your Snowflake credentials as a secret in DLT:
+ * In the `secrets.toml` file, add the following:
+```toml
+[destination.snowflake.credentials]
+database = "<your-database>"
+password = "<your-password>"
+username = "<your-username>"
+host = "<your-host>"
+warehouse = "<your-warehouse>"
+role = "<your-role>"
+```
+3. Run the pipeline:
+```bash
+python snowflake_pipeline.py
+```
+Same as the DuckDB example, this will load the Dune queries specificed in the `config.toml` file into Snowflake.
 
 ## Important Notes
 

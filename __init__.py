@@ -75,10 +75,3 @@ def dune_source(api_key: str = dlt.secrets.value):
         resource = create_dune_query_resource(query_config, api_key)
         resources.append(resource)
     return resources
-
-if __name__ == "__main__":
-    pipeline = dlt.pipeline(
-        pipeline_name="dune_source", destination="duckdb", dataset_name="dune"
-    )
-    load_info = pipeline.run(dune_source())
-    print(load_info)
