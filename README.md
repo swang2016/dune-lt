@@ -92,7 +92,7 @@ api_key = "your-dune-api-key"
 
 2. Run the pipeline:
 ```bash
-python __init__.py
+python duckdb_pipeline.py
 ```
 
 This will:
