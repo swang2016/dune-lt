@@ -6,9 +6,9 @@ This source allows you to:
 
 - Configure multiple Dune queries in a single config file (`.dlt/config.toml`)
 - dlt resources are created automatically based on the queries defined in the config file
-- Extract data incrementally using replication keys
 - Accepts Dune query IDs, query URLs, or SQL as input for the queries
 - Accepts query parameters if the Dune query is [parameterized](https://docs.dune.com/web-app/query-editor/parameters)
+- Extract data incrementally using replication keys
 
 The heavy lifting is done by `dlt` and [`spice`](https://github.com/paradigmxyz/spice), a Python package released by the Paradigm team to interact with the Dune REST API. I merely wrapped it in a `dlt` source, so all credit goes to the `dlt` and `spice` teams!
 
