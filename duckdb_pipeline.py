@@ -1,4 +1,4 @@
-from __init__ import dune_source
+from dune_lt import dune_source
 import dlt
 
 if __name__ == "__main__":

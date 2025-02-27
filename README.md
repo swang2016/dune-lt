@@ -28,6 +28,7 @@ cd dune-lt
 3. Install dependencies using Poetry:
 ```bash
 poetry install
+poetry add dlt
 ```
 
 4. Activate the Poetry shell:
@@ -163,4 +164,4 @@ You can run the `manually_defined_resources_example.py` file to see the same que
 - Incremental extraction and loading is supported when a replication key and starting replication value are specified 
 - Incremental extraction and loading is only supported for parameterized queries or raw SQL queries
 - Incremental is a bit finnicky, you have to make sure the replication key and starting replication value match the params in the query/SQL
-- `spice` supports cached queries but I've turned those off for now. Getting `Permission denied (os error 13)` error on one of my machines. If you want to turn caching on you can do so in the `__init__.py` file.
+- `spice` supports cached queries but I've turned those off for now. Getting `Permission denied (os error 13)` error on one of my machines. If you want to turn caching on you can do so in the `dune_lt/__init__.py` file.
