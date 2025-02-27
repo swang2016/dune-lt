@@ -19,18 +19,17 @@ def create_dune_query_resource(query_config: dict, api_key: str) -> dlt.resource
     @dlt.resource(
         name=query_config.get("name"), # type: ignore
         primary_key=query_config.get("primary_key", None),
-        # If primary key is not set, use append disposition
         write_disposition=(
-            'append' if not query_config.get("primary_key")
+            'append' if not query_config.get("primary_key") # If primary key is not set, use append disposition
             else query_config.get("write_disposition", "merge")
         ),
     )
     def dune_query(
         api_key: str = api_key,
         cursor=dlt.sources.incremental(
-            query_config.get("replication_key"), # type: ignore
-            initial_value=query_config.get("starting_replication_value"),
-        ) if query_config.get("replication_key") else None,
+            query_config.get("replication_key"), 
+            initial_value=query_config.get("starting_replication_value")
+            ) if query_config.get("replication_key") else None,
     ):
         logging.info(f"Extracting data for {query_config.get('name')}")
 
@@ -44,13 +43,13 @@ def create_dune_query_resource(query_config: dict, api_key: str) -> dlt.resource
         # incremental loading
         if cursor:
             logging.info(f"Incrementally loading data for {query_config.get('name')}")
-            if not _is_sql(query_config.get("query")):
-                params[query_config.get("replication_key")] = cursor.last_value
-            else:
+            if _is_sql(query_config.get("query")):
+                # detected that query is a SQL query, replace the replication key and cursor with the actual values
                 query = query.replace("{replication_key}", query_config.get("replication_key"))
                 query = query.replace("{cursor}", cursor.last_value)
-                logging.info(f"Query: {query}")
-            logging.info(f"Params: {params}")
+            else:
+                # detected that query is a url or query id, pass in the replication key and cursor as params
+                params[query_config.get("replication_key")] = cursor.last_value
             df = spice.query(
                 query,
                 api_key=api_key,
@@ -58,15 +57,14 @@ def create_dune_query_resource(query_config: dict, api_key: str) -> dlt.resource
                 parameters=params,
                 cache=False # TODO: caching is off for now, throws Permission denied (os error 13) sometimes
             )
-            logging.info(f"Length of df: {len(df)}")
+        # No incremental loading, just fetch the data
         else:
-            # No incremental loading, just fetch the data
             logging.info(f"No incremental loading config for {query_config.get('name')}, fetching all data.")
             df = spice.query(
                 query,
                 api_key=api_key,
                 refresh=True,
-                parameters=query_config.get("query_params", {}),
+                parameters=params,
                 cache=False # TODO: caching is off for now, throws Permission denied (os error 13) sometimes
             )
         logging.info(f"Finished extracting data for {query_config.get('name')}")

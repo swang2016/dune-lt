@@ -9,7 +9,7 @@ write_disposition = "merge"
 query = "https://dune.com/queries/4778954"
 primary_key = ["project", "date"]
 write_disposition = "merge"
-replication_key = "date"
+replication_key = "date" # make sure the name of the param in dune query matches name of the replication key
 starting_replication_value = "2025-01-01"
 
 ##### example with query params #####
@@ -19,13 +19,7 @@ primary_key = ["timestamp", "blockchain", "contract_address"] # multi PK example
 write_disposition = "merge"
 query_params = '{"symbol": "Y2K"}'
 
-##### no primary key example #####
-[dune_queries.y2k_price_data_no_pk]
-query = 4749625
-write_disposition = "merge" # will be overriden by "append" if no primary key is set
-query_params = '{"symbol": "Y2K"}'
-
-##### example with custom SQL #####
+##### example with custom SQL and incremental loading #####
 [dune_queries.custom_sql]
 query = """
 SELECT 
