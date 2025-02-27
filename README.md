@@ -5,7 +5,7 @@ A dlt source that uses [DLT (Data Load Tool)](https://dlthub.com/docs/intro) to 
 This source allows you to:
 
 - Configure multiple Dune queries in a single config file (`.dlt/config.toml`)
-- dlt resources are dynamically created based on the queries defined in the config file
+- dlt resources are dynamically generated based on the queries defined in the config file
 - Accepts Dune query IDs, query URLs, or SQL as input for the queries
 - Accepts query parameters if the Dune query is [parameterized](https://docs.dune.com/web-app/query-editor/parameters)
 - Extract and load data incrementally using replication keys
@@ -152,7 +152,7 @@ python snowflake_pipeline.py
 Same as the DuckDB example, this will load the Dune queries specificed in the `.dlt/config.toml` file into Snowflake.
 
 ## Manually Defined Resources Example
-`manually_defined_resources_example.py` shows how the same queries defined in `.dlt/config.toml` can be manually defined as dlt resources instead of being dynamically generated.
+`manually_defined_resources_example.py` shows how the same queries defined in `.dlt/config.toml` can be manually defined instead of being dynamically generated.
 
 You can run the `manually_defined_resources_example.py` file to see the same queries loaded into DuckDB.
 
