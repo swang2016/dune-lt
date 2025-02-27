@@ -46,7 +46,8 @@ primary_key = ["project", "_col1"]
 replication_key = "_col1"
 write_disposition = "merge"
 
-[dune_queries.custom_sql] # loads data from a custom SQL query into a table called "custom_sql"
+##### example with custom SQL and incremental loading #####
+[dune_queries.custom_sql]
 query = """
 SELECT 
     timestamp,
@@ -57,10 +58,14 @@ SELECT
 FROM prices.day 
 WHERE symbol = 'BRETT' 
 AND blockchain = 'base'
+AND contract_address = from_hex('532f27101965dd16442e59d40670faf5ebb142e4')
+AND {replication_key} > TIMESTAMP'{cursor}'
+order by timestamp
 """
 primary_key = "timestamp"
-replication_key = "timestamp"
 write_disposition = "merge"
+replication_key = "timestamp"
+starting_replication_value = "2024-11-01"
 ```
 
 ### Configuration Options
