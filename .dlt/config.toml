@@ -2,8 +2,15 @@
 [dune_queries.dex_volume]
 query = "https://dune.com/queries/4388"
 primary_key = ["project", "_col1"]
-replication_key = "_col1"
 write_disposition = "merge"
+
+##### dex volume incremental #####
+[dune_queries.dex_volume_incremental]
+query = "https://dune.com/queries/4778954"
+primary_key = ["project", "date"]
+write_disposition = "merge"
+replication_key = "date" # make sure the name of the param in dune query matches name of the replication key
+starting_replication_value = "2025-01-01"
 
 ##### example with query params #####
 [dune_queries.y2k_price_data]
@@ -12,13 +19,7 @@ primary_key = ["timestamp", "blockchain", "contract_address"] # multi PK example
 write_disposition = "merge"
 query_params = '{"symbol": "Y2K"}'
 
-##### same as above but no primary key #####
-[dune_queries.y2k_price_data_no_pk]
-query = 4749625
-write_disposition = "merge" # will be overriden by "append" if no primary key is set
-query_params = '{"symbol": "Y2K"}'
-
-##### example with custom SQL #####
+##### example with custom SQL and incremental loading #####
 [dune_queries.custom_sql]
 query = """
 SELECT 
@@ -31,11 +32,13 @@ FROM prices.day
 WHERE symbol = 'BRETT' 
 AND blockchain = 'base'
 AND contract_address = from_hex('532f27101965dd16442e59d40670faf5ebb142e4')
+AND {replication_key} > TIMESTAMP'{cursor}'
 order by timestamp
 """
 primary_key = "timestamp"
-replication_key = "timestamp"
 write_disposition = "merge"
+replication_key = "timestamp"
+starting_replication_value = "2024-11-01"
 
 
 

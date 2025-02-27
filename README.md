@@ -5,7 +5,7 @@ A dlt source that uses [DLT (Data Load Tool)](https://dlthub.com/docs/intro) to 
 This source allows you to:
 
 - Configure multiple Dune queries in a single config file (`.dlt/config.toml`)
-- dlt resources are created automatically based on the queries defined in the config file
+- dlt resources are dynamically created based on the queries defined in the config file
 - Accepts Dune query IDs, query URLs, or SQL as input for the queries
 - Accepts query parameters if the Dune query is [parameterized](https://docs.dune.com/web-app/query-editor/parameters)
 - Extract and load data incrementally using replication keys
@@ -46,7 +46,8 @@ primary_key = ["project", "_col1"]
 replication_key = "_col1"
 write_disposition = "merge"
 
-[dune_queries.custom_sql] # loads data from a custom SQL query into a table called "custom_sql"
+##### example with custom SQL and incremental loading #####
+[dune_queries.custom_sql]
 query = """
 SELECT 
     timestamp,
@@ -57,10 +58,14 @@ SELECT
 FROM prices.day 
 WHERE symbol = 'BRETT' 
 AND blockchain = 'base'
+AND contract_address = from_hex('532f27101965dd16442e59d40670faf5ebb142e4')
+AND {replication_key} > TIMESTAMP'{cursor}'
+order by timestamp
 """
 primary_key = "timestamp"
-replication_key = "timestamp"
 write_disposition = "merge"
+replication_key = "timestamp"
+starting_replication_value = "2024-11-01"
 ```
 
 ### Configuration Options
@@ -110,9 +115,9 @@ You can examine the extracted data using the provided Jupyter notebook `examine_
 
 Example tables created by the default configuration:
 - `dex_volume`: DEX trading volume data
-- `y2k_price_data`: Price data for Y2K token with primary key
-- `y2k_price_data_no_pk`: Same data but in append-only mode
-- `custom_sql`: Custom defined SQL query results
+- `dex_volume_incremental`: Same data as `dex_volume` but with incremental extraction and loading
+- `y2k_price_data`: Price data for Y2K token, example with query parameters
+- `custom_sql`: Custom defined SQL query results, example with raw SQL query and incremental extraction + loading
 
 dlt also supports a built-in streamlit app for exploring the data in the DuckDB database. To run the app, run the following command:
 
@@ -150,5 +155,7 @@ Same as the DuckDB example, this will load the Dune queries specificed in the `c
 
 - Make sure to close any duckdb database connections before running the pipeline again
 - For queries without a primary key, data will be appended rather than merged
-- Incremental loading is supported when a replication key is specified 
+- Incremental extraction and loading is supported when a replication key and starting replication value are specified 
+- Incremental extraction and loading is only supported for parameterized queries or raw SQL queries
+- Incremental is a bit finnicky, you have to make sure the replication key and starting replication value match the params in the query/SQL
 - `spice` supports cached queries but I've turned those off for now. Getting `Permission denied (os error 13)` error on one of my machines. If you want to turn caching on you can do so in the `__init__.py` file.
