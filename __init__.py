@@ -27,7 +27,7 @@ def create_dune_query_resource(query_config: dict, api_key: str) -> dlt.resource
     def dune_query(
         api_key: str = api_key,
         cursor=dlt.sources.incremental(
-            query_config.get("replication_key"), 
+            cursor_path=query_config.get("replication_key"), 
             initial_value=query_config.get("starting_replication_value")
             ) if query_config.get("replication_key") else None,
     ):

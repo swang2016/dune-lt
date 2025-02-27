@@ -113,7 +113,7 @@ You can examine the extracted data using the provided Jupyter notebook `examine_
 2. Query the extracted tables
 3. View the data as pandas DataFrames
 
-Example tables created by the default configuration:
+Example tables created by the default configuration defined in `.dlt/config.toml`:
 - `dex_volume`: DEX trading volume data
 - `dex_volume_incremental`: Same data as `dex_volume` but with incremental extraction and loading
 - `y2k_price_data`: Price data for Y2K token, example with query parameters
@@ -149,7 +149,12 @@ role = "<your-role>"
 ```bash
 python snowflake_pipeline.py
 ```
-Same as the DuckDB example, this will load the Dune queries specificed in the `config.toml` file into Snowflake.
+Same as the DuckDB example, this will load the Dune queries specificed in the `.dlt/config.toml` file into Snowflake.
+
+### See the `explicit_resources_example.py` file to see how the same queries defined in `.dlt/config.toml` can be explicitly defined
+The functions in `__init__.py` dynamically generate dlt resources from the queries defined in `.dlt/config.toml`. `explicit_resources_example.py` explicitly defines each of those queries as a dlt resource as an example of how you can manually define dlt resources. 
+
+You can run the `explicit_resources_example.py` file to see the same queries loaded into DuckDB.
 
 ## Important Notes
 
