@@ -151,10 +151,10 @@ python snowflake_pipeline.py
 ```
 Same as the DuckDB example, this will load the Dune queries specificed in the `.dlt/config.toml` file into Snowflake.
 
-### See the `explicit_resources_example.py` file to see how the same queries defined in `.dlt/config.toml` can be explicitly defined
-The functions in `__init__.py` dynamically generate dlt resources from the queries defined in `.dlt/config.toml`. `explicit_resources_example.py` explicitly defines each of those queries as a dlt resource as an example of how you can manually define dlt resources. 
+## Manually Defined Resources Example
+`manually_defined_resources_example.py` shows how the same queries defined in `.dlt/config.toml` can be manually defined as dlt resources instead of being dynamically generated.
 
-You can run the `explicit_resources_example.py` file to see the same queries loaded into DuckDB.
+You can run the `manually_defined_resources_example.py` file to see the same queries loaded into DuckDB.
 
 ## Important Notes
 

@@ -2,7 +2,7 @@ import dlt
 import spice
 
 """
-This file shows explicitly defined dlt resources.
+This file shows manuallly defined dlt resources.
 The same resources are defined in .dlt/config.toml and
 can be dynamically generated via __init__.py
 """
