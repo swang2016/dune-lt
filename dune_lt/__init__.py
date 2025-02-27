@@ -4,7 +4,7 @@ import spice
 from spice._extract import _is_sql
 import json
 
-from helpers import validate_query_config
+from dune_lt.helpers import validate_query_config
 
 logging.basicConfig(
     level=logging.INFO,
