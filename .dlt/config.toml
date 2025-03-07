@@ -8,7 +8,7 @@ write_disposition = "merge"
 [dune_queries.dex_volume_incremental]
 query = "https://dune.com/queries/4778954"
 primary_key = ["project", "date"]
-write_disposition = "replace"
+write_disposition = "merge"
 replication_key = "date" # make sure the name of the param in dune query matches name of the replication key
 starting_replication_value = "2025-01-01"
 
