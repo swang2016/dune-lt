@@ -46,7 +46,7 @@ def create_dune_query_resource(query_config: dict, api_key: str) -> dlt.resource
             if _is_sql(query_config.get("query")):
                 # detected that query is a SQL query, replace the replication key and cursor with the actual values
                 query = query.replace("{replication_key}", query_config.get("replication_key"))
-                query = query.replace("{cursor}", cursor.last_value)
+                query = query.replace("{cursor_value}", cursor.last_value)
             else:
                 # detected that query is a url or query id, pass in the replication key and cursor as params
                 params[query_config.get("replication_key")] = cursor.last_value
