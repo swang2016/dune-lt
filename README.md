@@ -1,6 +1,8 @@
 # dune-lt
 
-A dlt source that uses [DLT (Data Load Tool)](https://dlthub.com/docs/intro) to extract data from [Dune Analytics](https://dune.com/) queries and load into your destination of [choice](https://dlthub.com/docs/dlt-ecosystem/destinations/). In the examples shown in this repo, we use DuckDB and Snowflake as the destination. Jump to the [Example Usage: DuckDB](#example-usage-duckdb) and [Example Usage: Snowflake](#example-usage-snowflake) sections to see how to use the source.
+A dlt source that uses [DLT (Data Load Tool)](https://dlthub.com/docs/intro) to extract data from [Dune Analytics](https://dune.com/) queries and load into your destination of [choice](https://dlthub.com/docs/dlt-ecosystem/destinations/). In the examples shown in this repo, we use DuckDB and Snowflake as the destination. Jump to the [Example Usage: DuckDB](#example-usage-duckdb) and [Example Usage: Snowflake](#example-usage-snowflake) sections to see how to use the source. 
+
+This repo also includes code from this blog post: [Dune LT: A DLT Source for Extracting and Loading Blockchain Data from Dune's REST API](https://medium.com/@steven_wang/dune-lt-a-dlt-source-for-extracting-and-loading-blockchain-data-from-dunes-rest-api-384e06ee884a)
 
 This source allows you to:
 
