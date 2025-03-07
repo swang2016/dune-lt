@@ -32,7 +32,8 @@ FROM prices.day
 WHERE symbol = 'BRETT' 
 AND blockchain = 'base'
 AND contract_address = from_hex('532f27101965dd16442e59d40670faf5ebb142e4')
-AND {replication_key} > TIMESTAMP'{cursor}'
+-- must use 'replication_key' and 'cursor_value' keywords for incremental loading
+AND {replication_key} > TIMESTAMP '{cursor_value}' 
 order by timestamp
 """
 primary_key = "timestamp"
